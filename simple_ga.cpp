@@ -39,7 +39,7 @@ Simple_Invid::Simple_Invid(void) {
 // ---------- initializer
 void Simple_Invid::Init(unsigned int size) {
 	csz = size; // set size
-	chr = new char[csz]; // create a chrom for invid
+	chr = new unsigned char[csz]; // create a chrom for invid
 }
 
 // ---------- destructor
@@ -53,7 +53,7 @@ Simple_Invid& Simple_Invid::operator=(Simple_Invid& I) {
 		delete[] chr; // delete TO chrom
 		csz = I.csz; // copy size from FROM
 		gaf = I.gaf; // copy fitness from FROM
-		chr = new char[csz]; // create new chrom
+		chr = new unsigned char[csz]; // create new chrom
 		for (unsigned int i = 0; i < csz; i++)
 			*(chr + i) = *(I.chr + i); // copy chrom values from FROM into TO
 	}
@@ -61,7 +61,7 @@ Simple_Invid& Simple_Invid::operator=(Simple_Invid& I) {
 }
 
 // ---------- initiate chrom
-void Simple_Invid::Randomise(double(*FF)(char*, unsigned int)) {
+void Simple_Invid::Randomise(double(*FF)(unsigned char*, unsigned int)) {
 	for (unsigned int i = 0; i < csz; i++)
 		chr[i] = (char) rand(); // initialize chrom randomly
 	if (FF != NULL) {
@@ -70,11 +70,11 @@ void Simple_Invid::Randomise(double(*FF)(char*, unsigned int)) {
 }
 
 // ---------- initiate with data from file
-void Simple_Invid::Randomise(double(*FF)(char*, unsigned int), char* fname) {
+void Simple_Invid::Randomise(double(*FF)(unsigned char*, unsigned int), char* fname) {
 	unsigned int counter = 0;
 	ifstream ins;
 	ins.open(fname); // read chrom from (binary) file
-	while ((ins.read(chr + counter, 1)) && (counter < csz))
+	while ((ins.read((char*) chr + counter, 1)) && (counter < csz))
 		counter++;
 	if (FF != NULL)
 		gaf = (*FF)(chr, csz); // invoke fitness function
@@ -117,7 +117,7 @@ void Simple_Invid::Crossover(Simple_Invid& I, float pc) {
 }
 
 // ---------- call the fitness function
-double Simple_Invid::Fitness(double(*FF)(char*, unsigned int)) {
+double Simple_Invid::Fitness(double(*FF)(unsigned char*, unsigned int)) {
 	gaf = (*FF)(chr, csz);
 	return gaf;
 }
@@ -162,7 +162,7 @@ Simple_Popul::Simple_Popul(void) {
 }
 
 // ---------- initialiser
-void Simple_Popul::Init(double(*f)(char*, unsigned int), unsigned int size) {
+void Simple_Popul::Init(double(*f)(unsigned char*, unsigned int), unsigned int size) {
 	FF = f;
 	csz = size;
 	for (unsigned int i = 0; i < psz; i++) {
