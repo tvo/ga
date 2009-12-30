@@ -53,10 +53,12 @@ Simple_Invid::~Simple_Invid(void) {
 // ---------- copy operator
 Simple_Invid& Simple_Invid::operator=(Simple_Invid& I) {
 	if (this != &I) {
-		delete[] chr; // delete TO chrom
-		csz = I.csz; // copy size from FROM
+		if (csz != I.csz) {
+			csz = I.csz; // copy size from FROM
+			delete[] chr; // delete TO chrom
+			chr = new unsigned char[csz]; // create new chrom
+		}
 		gaf = I.gaf; // copy fitness from FROM
-		chr = new unsigned char[csz]; // create new chrom
 		for (unsigned int i = 0; i < csz; i++)
 			*(chr + i) = *(I.chr + i); // copy chrom values from FROM into TO
 	}
