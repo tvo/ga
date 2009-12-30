@@ -95,7 +95,6 @@ protected:
 	unsigned char* chr; // pointer to chromosome
 	unsigned int csz; // size of the chromosome
 	double gaf; // fitness for the ga process
-	int approxLvl; // GACov
 
 public:
 	friend class Simple_Popul;
@@ -105,25 +104,10 @@ public:
 
 	Simple_Invid& operator= (Simple_Invid&);
 
-	// Small rewrite to accomodate for approximation level
-	int operator< (Simple_Invid& I) {
-		if(approxLvl > I.approxLvl)
-		return 1;
-		else if(approxLvl == I.approxLvl)
-		return gaf < I.gaf;
-		else
-		return 0;
-	};
-
-	// Small rewrite to accomodate for approximation level
-	int operator<= (Simple_Invid& I) {//return gaf <= I.gaf;};
-		return approxLvl < I.approxLvl || (approxLvl == I.approxLvl && gaf < I.gaf);
-	};
-
+	int operator< (Simple_Invid& I) {return gaf < I.gaf;};
+	int operator<= (Simple_Invid& I) {return gaf <= I.gaf;};
 	int operator> (Simple_Invid& I) {return gaf > I.gaf;};
 	int operator>= (Simple_Invid& I) {return gaf >= I.gaf;};
-	int operator== (Simple_Invid& I) {return approxLvl == I.approxLvl && gaf == I.gaf;};
-	int operator!= (Simple_Invid& I) {return gaf != I.gaf;};
 
 	void Randomise (double (*FF) (unsigned char*, unsigned int));
 	void Randomise (double (*FF) (unsigned char*, unsigned int), char*);
@@ -139,7 +123,7 @@ public:
 private:
 	// may be template and usable for inherited classes
 	friend ostream& operator<< (ostream& out, Simple_Invid& I) {
-		out << "(" << I.approxLvl << ")" << I.gaf << " ";
+		out << I.gaf << " ";
 		//out << (int)(I.chr[0]) << "-" << (int)(I.chr[1]) << "-" << (int)(I.chr[2]) << " (" << I.approxLvl << ") " << I.gaf << endl;
 		return out;
 	};
