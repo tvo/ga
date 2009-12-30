@@ -86,7 +86,6 @@ class Simple_Popul;
 
 void bubble_sort_max(Simple_Invid** List, unsigned int size);
 void bubble_sort_min(Simple_Invid** List, unsigned int size);
-void survivalA(Simple_Invid** list, unsigned int psize, unsigned int csize);
 unsigned int Tournament_Selection(Simple_Invid** List, unsigned int size,
 		unsigned int tour);
 
@@ -137,11 +136,6 @@ public:
 	int Save (ofstream&); // save invid to ofstream
 	int Load (ifstream&); // load invid from ifstream
 
-	// GACov
-	unsigned char* getChromData();
-	void setApproxLvl(int al);
-	int getApproxLvl();
-
 private:
 	// may be template and usable for inherited classes
 	friend ostream& operator<< (ostream& out, Simple_Invid& I) {
@@ -174,17 +168,6 @@ protected:
 	void (*SS) (Simple_Invid**, unsigned int);
 	// pointer to sorting algorithm
 
-	// GACov
-	int* checkedBranches;
-	int branches;
-	int looking;
-	int branch;
-	int nodeExecuted;
-	double fitness;
-	int globalAL;
-	Simple_Invid* branchData;
-	Simple_Invid currentInvid;
-
 public: // basic functionality
 
 	Simple_Popul (void); // constructor
@@ -215,31 +198,10 @@ public: // change population parameter
 	void Ch (unsigned int);
 
 	// Optimisation strategy
-	void Maximise (void) {survive = 0; SS = bubble_sort_max;};// Maximisation problem
-	void Minimise (void) {survive = 0; SS = bubble_sort_min;};// Minimisation problem
+	void Maximise (void) {SS = bubble_sort_max;};// Maximisation problem
+	void Minimise (void) {SS = bubble_sort_min;};// Minimisation problem
 
-
-	// GACov
-	void setBranches(int b);
-	void checkBranch(int b);
-	void checkBranchLoop(int b, int its, int reqIts);
-	double lookingBranch(int b, int pred1, int pred2);
-	double lookingBranchAL(int b, int al, int pred1, int pred2);
-	double lookingBranchDouble(int b, double pred1, double pred2);
-	double lookingBranchDoubleAL(int b, int al, double pred1, double pred2);
-	double lookingBranchHammDist(int b, int pred1, int pred2);
-	double lookingBranchHammDistAL(int b, int al, int pred1, int pred2);
-	double lookingBranchLoop(int b, int its, int reqIts);
-	double lookingBranchLoopAL(int b, int al, int its, int reqIts);
-	int* getCheckedBranches();
-	Simple_Invid* getBranchData();
 	double getFitness() {return ppop[0]->Gaf();}
-
-	void (*survive) (Simple_Invid**, unsigned int, unsigned int);
-
-	// only use when survivalA is to be used!
-	// USE WITH CAUTION
-	void setSurvivalA() {SS = 0; survive = survivalA;};
 
 private:
 	// may be template and usable for inherited classes
