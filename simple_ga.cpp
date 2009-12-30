@@ -210,8 +210,10 @@ void Simple_Popul::Generation(unsigned int number) {
 		for (unsigned int child = 0; child < chsz - 1; child++) {
 
 			// clone two parents
-			*(cpop[child]) = *(ppop[Tournament_Selection(ppop, pasz, tour)]);
-			*(cpop[child + 1]) = *(ppop[Tournament_Selection(ppop, pasz, tour)]);
+			int p1 = Tournament_Selection(ppop, pasz, tour);
+			int p2 = Tournament_Selection(ppop, pasz, tour);
+			*(cpop[child]) = *(ppop[p1]);
+			*(cpop[child + 1]) = *(ppop[p2]);
 
 			// crossover the clones
 			cpop[child]->Crossover(*(cpop[child + 1]), pc);
@@ -309,7 +311,7 @@ void Simple_Popul::Pa(unsigned int size) {
 	pasz = size;
 	pop = tmp;
 	ppop = ptmp;
-	cpop = ptmp + chsz;
+	cpop = ptmp + pasz;
 }
 
 // ---------- change the number of children
@@ -338,7 +340,7 @@ void Simple_Popul::Ch(unsigned int size) {
 	chsz = size;
 	pop = tmp;
 	ppop = ptmp;
-	cpop = ptmp + chsz;
+	cpop = ptmp + pasz;
 }
 
 // ---------- Simple_Population printout
