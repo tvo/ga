@@ -102,14 +102,15 @@ void Simple_Invid::Mutation(float pm) {
 // ---------- recombination of two invids
 void Simple_Invid::Crossover(Simple_Invid& I, float pc) {
 	if (this != &I) {
-		char mask_xor, mask_and;
+		unsigned char mask_xor, mask_and, bit = 0;
 		unsigned int i, j;
 		for (i = 0; i < csz; i++) { // for each byte in the chrom
 			mask_and = 0; // set and_mask to zero
 			for (j = 0; j < 8; j++) {
-				mask_and <<= 1; // put a 1 into each randomly
 				if (drand48() < pc) // determine crossover locations
-					mask_and += 1; // selected positions where
+					bit ^= 1;
+				mask_and <<= 1; // put a 1 into each randomly
+				mask_and |= bit;
 			} // bits are swapped
 			mask_xor = chr[i] ^ I.chr[i];
 			mask_xor &= ~mask_and; // swap the bits
