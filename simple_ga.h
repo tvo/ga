@@ -123,8 +123,10 @@ public:
 private:
 	// may be template and usable for inherited classes
 	friend ostream& operator<< (ostream& out, Simple_Invid& I) {
-		out << I.gaf << " ";
-		//out << (int)(I.chr[0]) << "-" << (int)(I.chr[1]) << "-" << (int)(I.chr[2]) << " (" << I.approxLvl << ") " << I.gaf << endl;
+		out << I.gaf;
+		for (unsigned int i = 0; i < I.csz; ++i) {
+			out << ' ' << int(I.chr[i]);
+		}
 		return out;
 	};
 };
@@ -186,6 +188,7 @@ public: // change population parameter
 	void Minimise (void) {SS = bubble_sort_min;};// Minimisation problem
 
 	double getFitness() {return ppop[0]->Gaf();}
+	Simple_Invid& getBest() {return *ppop[0];}
 
 private:
 	// may be template and usable for inherited classes
