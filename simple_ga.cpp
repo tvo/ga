@@ -181,10 +181,14 @@ Simple_Popul::~Simple_Popul(void) {
 
 // ---------- initiate individuals in the population
 void Simple_Popul::Randomise(void) {
-	srand(time(NULL)); // init random generator (Windows)
+	static bool seeded = false;
+	if (!seeded) {
+		seeded = true;
+		srand(time(NULL)); // init random generator (Windows)
 #ifndef WIN32
-	srand48(time(NULL)); // Linux uses different rand init
+		srand48(time(NULL)); // Linux uses different rand init
 #endif
+	}
 	for (unsigned int i = 0; i < pasz + chsz; i++)
 		ppop[i]->Randomise(FF);
 	SS(ppop, psz); // sort the population min or max
