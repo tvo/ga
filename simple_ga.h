@@ -233,7 +233,7 @@ public: // change population parameter
 	double lookingBranchLoopAL(int b, int al, int its, int reqIts);
 	int* getCheckedBranches();
 	Simple_Invid* getBranchData();
-	double getFitness();
+	double getFitness() {return ppop[0]->Gaf();}
 
 	void (*survive) (Simple_Invid**, unsigned int, unsigned int);
 
