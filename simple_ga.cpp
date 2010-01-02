@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 ------------------------------------------------------------------------------ */
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <time.h>
@@ -348,40 +349,22 @@ ostream& operator<<(ostream& out, Simple_Popul& p) {
 	return out;
 }
 
+static bool compare_max(Simple_Invid* a, Simple_Invid* b) {
+	return *a > *b;
+}
+
+static bool compare_min(Simple_Invid* a, Simple_Invid* b) {
+	return *a < *b;
+}
+
 // ---------- FRIEND bubble sort for the population pointer list
 void bubble_sort_max(Simple_Invid** List, unsigned int size) {
-	char sorted;
-	Simple_Invid* tmp;
-	int pass = 1;
-	do {
-		sorted = 1;
-		for (unsigned int i = 0; i < size - pass; i++) {
-			if (*(List[i]) < *(List[i + 1])) {
-				sorted = 0;
-				tmp = List[i];
-				List[i] = List[i + 1];
-				List[i + 1] = tmp;
-			} // end if
-		} // end for
-	} while (sorted != 1);
+	std::sort(List, List + size, compare_max);
 }
 
 // ---------- FRIEND bubble sort for the population pointer list
 void bubble_sort_min(Simple_Invid** List, unsigned int size) {
-	char sorted;
-	Simple_Invid* tmp;
-	int pass = 1;
-	do {
-		sorted = 1;
-		for (unsigned int i = 0; i < size - pass; i++) {
-			if (*(List[i]) > *(List[i + 1])) {
-				sorted = 0;
-				tmp = List[i];
-				List[i] = List[i + 1];
-				List[i + 1] = tmp;
-			} // end if
-		} // end for
-	} while (sorted != 1);
+	std::sort(List, List + size, compare_min);
 }
 
 // ---------- FRIEND TOURNAMENT Selection Algorithm
