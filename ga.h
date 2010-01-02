@@ -23,30 +23,27 @@
 // ---------- RANDOM GENERATOR drand48() used under WIN32
 #ifdef WIN32 // win32 does not know drand48()
 inline double drand48(void) {
-    return (double) (rand() % RAND_MAX) / RAND_MAX;
-    // define RAND_MAX: 2147483647 in stdlib.h in LINUX
+	return (double) (rand() % RAND_MAX) / RAND_MAX;
+	// define RAND_MAX: 2147483647 in stdlib.h in LINUX
 }
 #endif
 
 // ---------- return the minimum of two values
-template <class T> 
-    inline T Min (T a, T b) {
-	if (a < b) 
-	    return a;
+template <class T>
+inline T Min (T a, T b) {
+	if (a < b)
+	return a;
 	else
-	    return b;
-    }
+	return b;
+}
 
 // CONSTANTS
 
-const double       dflt_fitness        = (double) 0.0;   
-const float        dflt_crossover_rate = (float) 0.5;  // uniform crossover
-const float        dflt_mutation_rate  = (float) 0.1;
-const unsigned int dflt_pa_size        = 40;  // even number! population
-const unsigned int dflt_ch_size        = 40;  // even number! population         
-const unsigned int dflt_tour_size      = 3;   // for tournament selection
-
-
-
+const double dflt_fitness = (double) 0.0;
+const float dflt_crossover_rate = (float) 0.5; // uniform crossover
+const float dflt_mutation_rate = (float) 0.1;
+const unsigned int dflt_pa_size = 40; // even number! population
+const unsigned int dflt_ch_size = 40; // even number! population
+const unsigned int dflt_tour_size = 3; // for tournament selection
 
 
