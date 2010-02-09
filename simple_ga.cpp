@@ -210,7 +210,7 @@ void Simple_Popul::Generation(unsigned int number) {
 	// for number generations
 	for (unsigned int loop = 0; loop < number; loop++) {
 		// for each child
-		for (unsigned int child = 0; child < chsz - 1; child++) {
+		for (unsigned int child = 0; child < chsz - 1; child += 2) {
 
 			// clone two parents
 			int p1 = Tournament_Selection(ppop, pasz, tour);
