@@ -387,3 +387,26 @@ unsigned int Tournament_Selection(Simple_Invid** List, unsigned int size, unsign
 	return pos; // return position in the population
 }
 
+double Simple_Popul::getFitnessMedian() {
+	// since psz is always even, median is always average between 2 invids
+	return (ppop[psz / 2 - 1]->Gaf() + ppop[psz / 2]->Gaf()) * 0.5;
+}
+
+double Simple_Popul::getFitnessAverage() {
+	double average = 0.0;
+	for (unsigned int i = 0; i < psz; ++i) {
+		double gaf = ppop[i]->Gaf();
+		average += gaf;
+	}
+	return average / psz;
+}
+
+double Simple_Popul::getFitnessVariance() {
+	double average = getFitnessAverage();
+	double variance = 0.0;
+	for (unsigned int i = 0; i < psz; ++i) {
+		double gaf = ppop[i]->Gaf();
+		variance += (gaf - average) * (gaf - average);
+	}
+	return variance / psz;
+}

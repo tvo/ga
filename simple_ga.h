@@ -190,6 +190,14 @@ public: // change population parameter
 	double getFitness() {return ppop[0]->Gaf();}
 	Simple_Invid& getBest() {return *ppop[0];}
 
+	double getWorstParentFitness() {
+		return ppop[pasz - 1]->Gaf();
+	}
+
+	double getFitnessMedian();
+	double getFitnessAverage();
+	double getFitnessVariance();
+
 private:
 	// may be template and usable for inherited classes
 	friend ostream& operator<< (ostream& out, Simple_Popul& I);
